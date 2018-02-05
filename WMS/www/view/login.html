@@ -1,0 +1,25 @@
+<ion-view title="Login">
+    <ion-nav-buttons>
+        <button class="button button-icon icon ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+    <ion-nav-bar style="background-color:#fff;">
+    </ion-nav-bar>
+    <ion-nav-title>
+    </ion-nav-title>
+    <ion-pane class="login">
+        <div style="text-align:center; margin-left:auto; margin-right:auto; margin-top:0em; margin-bottom:-4.5em;width:200px;height:200px;">
+            <img src="./img/WMSLogo.png" width="100px;" height="100px;" style="margin-top:44px;">
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <i class="icon ion-android-person placeholder-icon"></i>&nbsp;&nbsp;
+                <input type="text" id="iUserName" placeholder="User Name" required ng-model="logininfo.strUserName" style="border: 0px;">
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-android-lock placeholder-icon"></i>&nbsp;&nbsp;
+                <input type="password" id="iPassword" placeholder="Password" required ng-model="logininfo.strPassword" style="border: 0px;">
+            </label>
+            <button class="button button-block button-positive" ng-click="login()">SIGN IN</button>
+        </div>
+	</ion-pane>
+</ion-view>

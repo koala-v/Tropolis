@@ -1,0 +1,64 @@
+<ion-view title="GT-List">
+    <ion-header-bar class="bar-positive" align-title="center">
+        <button class="button button-icon icon ion-android-arrow-back" ng-click="returnMain()"></button>
+        <div class="h1 title">Transfer</div>
+    </ion-header-bar>
+    <ion-pane style="margin-top:44px; height:95px; overflow:visible;">
+        <div>
+          <div class="row row-center" id="div-list-rcbp">
+              <div class="col col-33" style="text-align:center;">
+                  <label>Customer</label>
+              </div>
+              <div class="col col-67">
+                <ui-select ng-model="Rcbp1.selected" theme="bootstrap" reset-search-input="true" on-select="showImpm1(Rcbp1.selected.BusinessPartyCode,null)">
+                    <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.BusinessPartyName | limitTo:16}}</ui-select-match>
+                    <ui-select-choices repeat="Rcbp1 in Rcbp1s track by $index" refresh="refreshRcbp1($select.search)" refresh-delay="0" position="down">
+                        <div ng-bind-html="Rcbp1.BusinessPartyName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+              </div>
+          </div>
+            <div class="row row-center" id="div-list-rcbp">
+                <div class="col col-33" style="text-align:center;">
+                    <label>Warehouse</label>
+                </div>
+                <div class="col col-67">
+                    <ui-select ng-model="Whwh1.selected" theme="bootstrap" reset-search-input="true">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.WarehouseName | limitTo:16}}</ui-select-match>
+                        <ui-select-choices repeat="Whwh1 in Whwh1s track by $index" refresh="refreshWhwh1($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Whwh1.WarehouseName | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-center" id="div-list-grn">
+                <div class="col col-33" style="text-align:center;">
+                    <label>Store No</label>
+                </div>
+                <div class="col col-67">
+                    <ui-select theme="bootstrap" ng-model="Whwh2.selected" reset-search-input="true" on-select="showImpm1(null,Whwh2.selected.StoreNo)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.StoreNo}}</ui-select-match>
+                        <ui-select-choices repeat="Whwh2 in Whwh2s track by $index" refresh="refreshWhwh2($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Whwh2.StoreNo | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <hr style="margin-top:-0.3em;">
+        </div>
+    </ion-pane>
+    <ion-content style="margin-top:135px;">
+        <ion-tree-list items="Impm1s" collapsed="true" template-url="view/GoodsTransfer/ion-item.tmpl.html">
+        </ion-tree-list>
+    </ion-content>
+    <ion-footer-bar class="bar-positive hide-on-keyboard-open" ng-show="Impm1s.length > 0">
+        <div class="button-bar">
+            <button class="button icon ion-android-done" ng-click="checkConfirm()">
+                &nbsp;Confirm
+            </button>
+            <button class="button icon ion-arrow-return-right" ng-click="clearImpm1s()">
+                &nbsp;Cancel
+            </button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,141 @@
+<ion-view title="Enquiry-List">
+    <ion-header-bar class="bar-positive" align-title="center">
+        <button class="button button-icon icon ion-android-arrow-back" ng-click="returnMain()"></button>
+        <div class="h1 title">Enquiry</div>
+    </ion-header-bar>
+    <ion-pane style="margin-top:44px; height:70px; overflow:visible;">
+        <div>
+            <div class="row row-center" id="div-list-impr">
+                <div class="col col-40" style="text-align:center;">
+                    <label>Product Code</label>
+                </div>
+                <div class="col col-60">
+                    <ui-select ng-model="Impr1.selected" theme="bootstrap" reset-search-input="true" on-select="showImpm(Impr1.selected.ProductCode,null)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">
+                            {{$select.selected.ProductCode | limitTo:16}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="Impr1 in Impr1s track by $index" refresh="refreshImpr1($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Impr1.ProductCode | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-center" id="div-list-impm">
+                <div class="col col-40" style="text-align:center;">
+                    <label>Cust Batch No</label>
+                </div>
+                <div class="col col-60">
+                    <ui-select theme="bootstrap" ng-model="Impm1.selected" reset-search-input="true" on-select="showImpm(null,Impm1.selected)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">
+                            {{$select.selected.UserDefine1 | limitTo:16}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="Impm1 in Impm1s track by $index" refresh="refreshImpm1s($select.search)" refresh-delay="0">
+                            <div ng-bind-html="Impm1.UserDefine1 | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-center" id="div-list-rcbp">
+                <div class="col col-40" style="text-align:center;">
+                    <label>Warehouse</label>
+                </div>
+                <div class="col col-60">
+                    <ui-select ng-model="Whwh1.selected" theme="bootstrap" reset-search-input="true">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.WarehouseName | limitTo:16}}</ui-select-match>
+                        <ui-select-choices repeat="Whwh1 in Whwh1s track by $index" refresh="refreshWhwh1($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Whwh1.WarehouseName | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-center" id="div-list-grn">
+                <div class="col col-40" style="text-align:center;">
+                    <label>Store No</label>
+                </div>
+                <div class="col col-60">
+                    <ui-select theme="bootstrap" ng-model="Whwh2.selected" reset-search-input="true" on-select="showImpmwh(null,Whwh2.selected.StoreNo)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.StoreNo}}</ui-select-match>
+                        <ui-select-choices repeat="Whwh2 in Whwh2s track by $index" refresh="refreshWhwh2($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Whwh2.StoreNo | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <hr style="margin-top:-0.3em;">
+        </div>
+    </ion-pane>
+    <ion-content style="margin-top:160px;">
+        <ion-list id="div-list">
+            <div class="card" ng-repeat="Impm1 in Impm1sEnquiry">
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>Product Code<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67">
+                        <div class="item-text-wrap">
+                            <p>
+                                <span ng-bind="Impm1.ProductCode"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>Description<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67 item-text-wrap">
+                        <p>
+                            <span ng-bind="Impm1.ProductName"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>GRN No<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67 item-text-wrap">
+                        <p>
+                            <span ng-bind="Impm1.GoodsReceiveorIssueNo"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>Ref No<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67 item-text-wrap">
+                        <p>
+                            <span ng-bind="Impm1.RefNo"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-60">
+                        <div class="row" style="padding-left: 16px;">
+                            <div class="col-50">
+                                <p>Store No<span class="pull-right">:&nbsp;</span></p>
+                            </div>
+                            <div class="col-50">
+                                <p>
+                                    <span ng-bind="Impm1.StoreNo"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-40">
+                        <div class="row">
+                            <div class="col-60">
+                                <p>Balance<span class="pull-right">:&nbsp;</span></p>
+                            </div>
+                            <div class="col-40">
+                                <p>
+                                    <span ng-bind="Impm1.BalanceQty"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view>

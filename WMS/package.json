@@ -1,0 +1,44 @@
+{
+  "name": "TC55App",
+  "version": "1.0.0",
+  "description": "TC55 App",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": ">=1.7.7",
+    "shelljs": "^0.6.0"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-app-version",
+    "cordova-plugin-battery-status",
+    "cordova-plugin-camera",
+    "cordova-plugin-console",
+    "cordova-plugin-contacts",
+    "cordova-plugin-datepicker",
+    "cordova-plugin-device",
+    "cordova-plugin-dialogs",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-file-opener2",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-globalization",
+    "cordova-plugin-media",
+    "cordova-plugin-media-capture",
+    "cordova-plugin-network-information",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-vibration",
+    "cordova-plugin-x-toast",
+    "ionic-plugin-keyboard",
+    "https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
+    "cordova-plugin-device-motion",
+    "cordova-plugin-device-orientation",
+    "cordova-plugin-actionsheet",
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-whitelist",
+    "cordova-sqlite-storage",
+    "cordova-plugin-crosswalk-webview"
+  ],
+  "cordovaPlatforms": [
+    "android"
+  ]
+}

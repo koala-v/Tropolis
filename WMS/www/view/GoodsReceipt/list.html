@@ -1,0 +1,82 @@
+<ion-view title="GRT-List">
+    <ion-header-bar class="bar-positive" align-title="center">
+        <button class="button button-icon icon ion-android-arrow-back" ng-click="returnMain()"></button>
+        <div class="h1 title">Goods Receipt Tally</div>
+    </ion-header-bar>
+    <ion-pane style="margin-top:44px; height:70px; overflow:visible;">
+        <div>
+            <div class="row row-center" id="div-list-rcbp">
+                <div class="col col-33" style="text-align:center;">
+                    <label>Customer</label>
+                </div>
+                <div class="col col-67">
+                    <ui-select ng-model="Rcbp1.selected" theme="bootstrap" reset-search-input="true" on-select="ShowImgr1(Rcbp1.selected.BusinessPartyCode)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.BusinessPartyName | limitTo:16}}</ui-select-match>
+                        <ui-select-choices repeat="Rcbp1 in Rcbp1s track by $index" refresh="refreshRcbp1($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="Rcbp1.BusinessPartyName | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <!--div id="scrollable-dropdown-menu">
+                        <input class="typeahead" type="text" placeholder="Customer Name">
+                    </div-->
+                </div>
+            </div>
+            <div class="row row-center" id="div-list-grn">
+                <div class="col col-33" style="text-align:center;">
+                    <label>GRN No</label>
+                </div>
+                <div class="col col-67">
+                    <ui-select theme="bootstrap" ng-model="GrnNo.selected" reset-search-input="true" on-select="GoToDetail(GrnNo.selected)">
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.GoodsReceiptNoteNo}}</ui-select-match>
+                        <ui-select-choices repeat="GrnNo in GrnNos track by $index" refresh="refreshGrnNos($select.search)" refresh-delay="0" position="down">
+                            <div ng-bind-html="GrnNo.GoodsReceiptNoteNo | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <hr style="margin-top:-0.3em;">
+        </div>
+    </ion-pane>
+    <ion-content style="margin-top:100px;">
+        <ion-list id="div-grt-list">
+            <div class="card" ng-repeat="Imgr1 in Imgr1s" id="Imgr1-{{ Imgr1.Index }}" ng-click="GoToDetail(Imgr1)">
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>GRN No<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67">
+                        <div class="item-text-wrap">
+                            <p>
+                                <span ng-bind="Imgr1.GoodsReceiptNoteNo"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>Receipt Date<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67">
+                        <div class="item-text-wrap">
+                            <p>
+                                <span ng-bind="showDate(Imgr1.ReceiptDate)"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-input">
+                    <div class="col-33">
+                        <p>Ref No<span class="pull-right">:&nbsp;</span></p>
+                    </div>
+                    <div class="col-67">
+                        <div class="item-text-wrap">
+                            <p>
+                                <span ng-bind="Imgr1.RefNo"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view>

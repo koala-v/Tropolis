@@ -1,0 +1,103 @@
+<span class="symbol">
+    <i class="icon" ng-if="item.tree.length > 0" ng-class="item.tree.collapsed ? 'ion-arrow-right-b' : 'ion-arrow-down-b'"></i>
+    <span ng-show="item.tree.length > 0" ng-bind="item.name"></span>
+</span>
+<div class="card" ng-hide="item.tree.length > 0" style="margin: 0px 0px;">
+    <div class="item item-input">
+        <div class="col-33">
+            <p>Product Code<span class="pull-right">:&nbsp;</span></p>
+        </div>
+        <div class="col-67">
+            <div class="item-text-wrap">
+                <p>
+                    <span ng-bind="item.ProductCode"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="item item-input">
+        <div class="col-33">
+            <p>Description<span class="pull-right">:&nbsp;</span></p>
+        </div>
+        <div class="col-67">
+            <div class="item-text-wrap">
+                <p>
+                    <span ng-bind="item.ProductDescription"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="item item-input">
+        <div class="col-33">
+            <p>GRN No<span class="pull-right">:&nbsp;</span></p>
+        </div>
+        <div class="col-67">
+            <div class="item-text-wrap">
+                <p>
+                    <span ng-bind="item.GoodsReceiveorIssueNo"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="item item-input">
+        <div class="col-33">
+            <p>Ref No<span class="pull-right">:&nbsp;</span></p>
+        </div>
+        <div class="col-67">
+            <div class="item-text-wrap">
+                <p>
+                    <span ng-bind="item.UserDefine1"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="item item-input">
+        <div class="col-40">
+            <div class="row" style="margin-left: -5px;">
+                <div class="col-67">
+                    <p>Balance<span class="pull-right">:&nbsp;</span></p>
+                </div>
+                <div class="col-33">
+                    <p><span ng-bind="item.QtyBal - item.ScanQty"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-60">
+            <div class="row" style="margin-left:0px;">
+                <div class="col-33" style="padding-top:6px;">
+                    <p>Qty<span class="pull-right">:&nbsp;</p>
+                </div>
+                <div class="col-47">
+                    <input type="number" id="txt-qty-{{ item.BatchLineItemNo }}" ng-model="item.ScanQty" ng-change="checkQty(item);" style="padding-right:1em;padding-top: 0px;">
+                </div>
+                <div class="col-20">
+                    <button class="button button-clear button-small" ng-click="clearInput('qty',item)">
+                        <i class="icon ion-android-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="item item-input">
+        <div class="col-33">
+            <p>To Store No<span class="pull-right">:&nbsp;</span></p>
+        </div>
+        <div class="col-67">
+            <div class="row" style="margin-left:0px;">
+                <div class="col col-60">
+                    <input type="text" id="txt-storeno-{{ item.BatchLineItemNo }}" ng-model="item.FromToStoreNo" style="padding-right:1em;padding-top: 0px;" ng-keypress="enter($event)">
+                </div>
+                <div class="col col-20">
+                    <button class="button button-clear button-small" ng-click="openCam(item)">
+                        <i class="icon ion-qr-scanner"></i>
+                    </button>
+                </div>
+                <div class="col col-20">
+                    <button class="button button-clear button-small" ng-click="clearInput('storeno',item)">
+                        <i class="icon ion-android-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

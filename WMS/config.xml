@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget defaultlocale="en-US" id="com.sysmagic.tc155" version="1.0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">
+  <name>Tropolis APP</name>
+  <description>
+    </description>
+  <author email="vivlong@163.com" href="http://www.28story.com">SysMagic Software Solution</author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <allow-navigation href="http://*/*"/>
+  <allow-navigation href="https://*/*"/>
+  <allow-navigation href="data:*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="sms:*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="geo:*"/>
+  <preference name="Fullscreen" value="False"/>
+  <preference name="SplashScreen" value="none"/>
+  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="KeepRunning" value="True"/>
+  <preference name="ShowTitle" value="True"/>
+  <preference name="InAppBrowserStorageEnabled" value="True"/>
+  <preference name="SuppressesIncrementalRendering" value="True"/>
+  <preference name="Orientation" value="portrait"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="android-targetSdkVersion" value="19"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <preference name="xwalkVersion" value="19+"/>
+  <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
+  <preference name="xwalkMode" value="embedded"/>
+  <preference name="xwalkMultipleApk" value="true"/>
+  <platform name="android">
+    <icon src="res/icons/android/icon-96-xhdpi.png"/>
+    <splash density="port-hdpi" src="res/icons/android/icon-96-xhdpi.png"/>
+  </platform>
+  <engine name="android" spec="~4.1.1"/>
+</widget>

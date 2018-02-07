@@ -24,5 +24,9 @@ namespace WebApi.ServiceModel.Tables
         public string Email { get; set; }
         public string WebSite { get; set; }
         public string StatusCode { get; set; }
+        public string UserDefine01 { get; set; }    // for imgr1.UserDefine01   
+
+
+
     }
 }

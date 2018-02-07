@@ -22,6 +22,7 @@ namespace WebApi.ServiceModel.Wms
         public string TrxNo { get; set; }
         public string UserID { get; set; }
         public string StatusCode { get; set; }
+        public string CustGINNo { get; set; }
     }
     public class Imgi_Logic
     {
@@ -35,36 +36,37 @@ namespace WebApi.ServiceModel.Wms
                 {
                     if (!string.IsNullOrEmpty(request.CustomerCode))
                     {
-                        if (!string.IsNullOrEmpty(request.StatusCode))
-                        {
-                            Result = db.Select<Imgi1>("Select * from imgi1 where StatusCode = 'EXE' AND Convert(Char(10), IssueDateTime, 20) = Convert(Char(10), getdate(), 20) AND CustomerCode = " + Modfunction.SQLSafeValue(request.CustomerCode));
-                            //Result = db.SelectParam<Imgi1>(
-                            //            i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.CustomerCode == request.CustomerCode
-                            //).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
-                        }
-                        else
-                        {
-                            Result = db.SelectParam<Imgi1>(
-                                            i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.StatusCode != "CMP" && i.CustomerCode == request.CustomerCode
-                            ).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
-                        }
+                        //if (!string.IsNullOrEmpty(request.StatusCode))
+                        //{
+                        //    Result = db.Select<Imgi1>("Select * from imgi1 where StatusCode = 'EXE' AND Convert(Char(10), IssueDateTime, 20) = Convert(Char(10), getdate(), 20) AND CustomerCode = " + Modfunction.SQLSafeValue(request.CustomerCode));
+                        //    //Result = db.SelectParam<Imgi1>(
+                        //    //            i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.CustomerCode == request.CustomerCode
+                        //    //).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
+                        //}
+                        //else
+                        //{
+                        //    Result = db.SelectParam<Imgi1>(
+                        //                    i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.StatusCode != "CMP" && i.CustomerCode == request.CustomerCode
+                        //    ).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
+                        //}
 
                     }
-                    else if (!string.IsNullOrEmpty(request.GoodsIssueNoteNo))
+                    else if (!string.IsNullOrEmpty(request.CustGINNo))
                     {
-                        if (!string.IsNullOrEmpty(request.StatusCode))
-                        {
-                            Result = db.Select<Imgi1>("Select * from imgi1 where StatusCode = 'EXE' AND Convert(Char(10), IssueDateTime, 20) = Convert(Char(10), getdate(), 20) AND GoodsIssueNoteNo like '"+ Modfunction.SQLSafe(request.GoodsIssueNoteNo) + "%'");
-                            //Result = db.SelectParam<Imgi1>(
-                            //                i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.GoodsIssueNoteNo.StartsWith(request.GoodsIssueNoteNo)
-                            //).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
-                        }
-                        else
-                        {
-                            Result = db.SelectParam<Imgi1>(
-                                            i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.StatusCode != "CMP" && i.GoodsIssueNoteNo.StartsWith(request.GoodsIssueNoteNo)
+                        //string strImgi = "";
+                        //strImgi = "Select Top 10 Imgr1.* From Imgr1 " +
+                        //                   "Where IsNUll(StatusCode,'')<>'DEL' And IsNUll(StatusCode,'')<>'EXE' And IsNUll(StatusCode,'')<>'CMP' " +
+                        //                   "And (Select count(*) from Imgr2 Where Imgr2.TrxNo=Imgr1.TrxNo) > 0 " +
+                        //                   "And IsNUll(InvoiceNo,'') LIKE '" + request.CustGINNo + "%'";
+
+                        //Result = db.Select<Imgi1>(
+                        //    strImgi
+                        //);
+
+                        Result = db.SelectParam<Imgi1>(
+                                            i => i.CustomerCode != null && i.CustomerCode != "" && i.StatusCode != null && i.StatusCode != "DEL" && i.StatusCode != "EXE" && i.StatusCode != "CMP" && i.CustGINNo.StartsWith(request.CustGINNo)
                             ).OrderByDescending(i => i.IssueDateTime).ToList<Imgi1>();
-                        }
+                        
 
                     }
                 }
@@ -74,6 +76,7 @@ namespace WebApi.ServiceModel.Wms
         }
         public List<Imgi2_Picking> Get_Imgi2_Picking_List(Imgi request)
         {
+             //imgr1 
             List<Imgi2_Picking> Result = null;
             try
             {
@@ -85,7 +88,8 @@ namespace WebApi.ServiceModel.Wms
                                     "Imgi2.*, " +
                                     "(Select Top 1 UserDefine1 From Impm1 Where TrxNo=Imgi2.ReceiptMovementTrxNo) AS SerialNo," +
                                     "(Select Top 1 " + strBarCodeFiled + " From Impr1 Where TrxNo=Imgi2.ProductTrxNo) AS BarCode," +
-                                    "(Select Top 1 SerialNoFlag From Impr1 Where TrxNo=Imgi2.ProductTrxNo) AS SerialNoFlag," +
+                                    //"(Select Top 1 SerialNoFlag From Impr1 Where TrxNo=Imgi2.ProductTrxNo) AS SerialNoFlag," +
+                                     " '' AS SerialNoFlag," + // Tropolis
                                     "(CASE Imgi2.DimensionFlag When '1' THEN Imgi2.PackingQty When '2' THEN Imgi2.WholeQty ELSE Imgi2.LooseQty END) AS Qty, " +
                                     "0 AS QtyBal, 0 AS ScanQty " +
                                     "From Imgi2 " +
@@ -129,18 +133,28 @@ namespace WebApi.ServiceModel.Wms
             {
                 using (var db = DbConnectionFactory.OpenDbConnection("WMS"))
                 {
-                    Result = db.Update<Imgi1>(
-                                    new
-                                    {
-                                        StatusCode = request.StatusCode,
-                                        CompleteBy = request.UserID,
-                                        CompleteDate = DateTime.Now,
-                                        UpdateBy= request.UserID,
-                                        UpdateDateTime= DateTime.Now
+                    //Result = db.Update<Imgi1>(
+                    //                new
+                    //                {
+                    //                    StatusCode = request.StatusCode,
+                    //                    CompleteBy = request.UserID,
+                    //                    CompleteDate = DateTime.Now,
+                    //                    UpdateBy= request.UserID,
+                    //                    UpdateDateTime= DateTime.Now
 
-                                    },
-                                    p => p.TrxNo == int.Parse(request.TrxNo)
-                    );
+                    //                },
+                    //                p => p.TrxNo == int.Parse(request.TrxNo)
+                    //);
+
+
+                    string strImgi = "Update Imgi1 set StatusCode ='"+ request.StatusCode + "' , " +
+                                   "  CompleteBy='" + request.UserID + "' , " +
+                                   "  CompleteDate = '" + DateTime.Now + "', "+
+                                   "  UpdateBy =  '" + request.UserID + "' , " +
+                                   "  UpdateDateTime = '" + DateTime.Now + "'" +
+                                   "  Where TrxNo = "+request.TrxNo+""   ;
+                    db.ExecuteSql(strImgi);
+
                 }
             }
             catch { throw; }

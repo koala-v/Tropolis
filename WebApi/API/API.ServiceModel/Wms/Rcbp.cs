@@ -14,9 +14,8 @@ namespace WebApi.ServiceModel.Wms
     [Route("/wms/rcbp1", "Get")]								//rcbp1?BusinessPartyName= &TrxNo=			
     public class Rcbp : IReturn<CommonResponse>
     {
-        public string TrxNo { get; set; }
-        public string BusinessPartyName { get; set; }
-        public string RecordCount { get; set; }
+      
+        public string UserDefine01 { get; set; }    //  imgr1.UserDefine01   
     }
     public class WMSRcbp_Logic
     {
@@ -28,46 +27,17 @@ namespace WebApi.ServiceModel.Wms
             {
                 using (var db = DbConnectionFactory.OpenDbConnection("WMS"))
                 {
-                    if (!string.IsNullOrEmpty(request.BusinessPartyName))
+                    if (!string.IsNullOrEmpty(request.UserDefine01))
                     {
-                        string strSQL = "Select Top 10 *,(Select Top 1 CountryName From Rccy1 Where CountryCode=Rcbp1.CountryCode) AS CountryName From Rcbp1 Where IsNUll(StatusCode,'')<>'DEL' And BusinessPartyName LIKE '" + request.BusinessPartyName + "%' Order By BusinessPartyCode Asc";
+                        string strSQL = "Select Top 10 * From imgr1 Where IsNUll(StatusCode,'')<>'DEL' And UserDefine01 LIKE '" + request.UserDefine01 + "%' Order By UserDefine01 Asc";
                         Result = db.Select<Rcbp1>(strSQL);
                     }
-                    else if (!string.IsNullOrEmpty(request.TrxNo))
-                    {
-                        string strSQL = "Select top 1 *,(Select Top 1 CountryName From Rccy1 Where CountryCode=Rcbp1.CountryCode) AS CountryName From Rcbp1 Where IsNUll(StatusCode,'')<>'DEL' And TrxNo=" + int.Parse(request.TrxNo);
-                        Result = db.Select<Rcbp1>(strSQL);
-                    }
+                   
                 }
             }
             catch { throw; }
             return Result;
         }
-        public List<Rcbp1> Get_Rcbp1_SpsList(Rcbp request)
-        {
-            List<Rcbp1> Result = null;
-            try
-            {
-                using (var db = DbConnectionFactory.OpenDbConnection("WMS"))
-                {
-                    int count = int.Parse(request.RecordCount);
-                    string strWhere = "";
-                    if (!string.IsNullOrEmpty(request.BusinessPartyName))
-                    {
-                        strWhere = " Where PartyType='CL' And BusinessPartyName LIKE '" + request.BusinessPartyName + "%'";
-                    }
-                    string strSelect = "SELECT " +
-                    "r1.*, (Select Top 1 CountryName From Rccy1 Where CountryCode=r1.CountryCode) AS CountryName " +
-                    "FROM Rcbp1 r1," +
-                    "(SELECT TOP " + (count + 20) + " row_number() OVER (ORDER BY BusinessPartyName ASC) n, TrxNo FROM Rcbp1 " + strWhere + ") r2 " +
-                    "WHERE r1.TrxNo = r2.TrxNo AND r2.n > " + count;
-                    string strOrderBy = " ORDER BY r2.n ASC";
-                    string strSQL = strSelect + strOrderBy;
-                    Result = db.Select<Rcbp1>(strSQL);
-                }
-            }
-            catch { throw; }
-            return Result;
-        }
+
     }
 }

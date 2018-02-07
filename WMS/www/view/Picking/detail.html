@@ -28,23 +28,23 @@
                         </span>&nbsp;:&nbsp;
                         <span style="font-size: medium;" ng-bind="Detail.Imgi2.ProductDescription | limitTo:18"></span>
                     </label>
-                    <label class="item item-input" style="padding-left:6px;" ng-if="Detail.Imgi2.SerialNoFlag == 'Y'">
+                    <!-- <label class="item item-input" style="padding-left:6px;" ng-if="Detail.Imgi2.SerialNoFlag == 'Y'">
                         <span class="input-label col-33" style="padding-top:2px; padding-bottom: 2px; font-size: x-small;">
                             Serial No
                         </span>&nbsp;:&nbsp;
                         <span style="font-size: medium;" ng-bind="Detail.Imgi2.SerialNo | limitTo:18"></span>
-                    </label>
+                    </label> -->
                     <label class="item item-input" style="padding-left:6px;">
                         <span class="input-label col-50" style="padding-top:2px; padding-bottom: 2px; font-size: x-small; min-width:60%;">
                             Qty To Issue&nbsp;&nbsp;:&nbsp;&nbsp;
                             <span style="font-size: medium;font-weight:bold;" ng-bind="Detail.Imgi2.Qty"></span>
                         </span>
-                        <span class="input-label" style="padding-top:2px; padding-bottom: 2px; font-size: x-small;">
+                        <!-- <span class="input-label" style="padding-top:2px; padding-bottom: 2px; font-size: x-small;">
                             BAL&nbsp;&nbsp;:&nbsp;&nbsp;
                             <span style="font-size: medium;font-weight:bold;color:red;" ng-bind="Detail.Imgi2.QtyBal"></span>
-                        </span>
+                        </span> -->
                     </label>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col col-80" style="padding:0px;">
                             <label class="item item-input">
                                 <span class="input-label" style="padding-top:2px; padding-bottom: 2px;">Store No&nbsp;&nbsp;:&nbsp;&nbsp;</span>
@@ -57,7 +57,7 @@
                         <div class="col">
                             <button class="button button-positive button-clear button-small" ng-click="clearInput('StoreNo')"><i class="icon ion-android-close"></i></button>
                         </div>
-                    </div>
+                    </div> -->
                     <hr style="margin: 0;" />
                     <div class="row">
                         <div class="col col-80" style="padding:0px;">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <hr style="margin: 0;" />
-                    <div class="row" ng-show="Detail.Imgi2.SerialNoFlag == 'Y'">
+                    <!-- <div class="row" ng-show="Detail.Imgi2.SerialNoFlag == 'Y'">
                         <div class="col col-80" style="padding:0px;">
                             <label class="item item-input">
                                 <span class="input-label" style="padding-top:2px; padding-bottom: 2px;">Serial No&nbsp;&nbsp;:&nbsp;&nbsp;</span>
@@ -87,7 +87,7 @@
                         <div class="col">
                             <button class="button button-positive button-clear button-small" ng-click="clearInput('SerialNo')"><i class="icon ion-android-close"></i></button>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--
                                         <label class="item item-input">

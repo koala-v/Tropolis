@@ -22,10 +22,10 @@ appControllers.controller('GrListCtrl', [
         $scope.refreshRcbp1 = function (BusinessPartyName) {
             if (is.not.undefined(BusinessPartyName) && is.not.empty(BusinessPartyName)) {
                 var objUri = ApiService.Uri(true, '/api/wms/rcbp1');
-                objUri.addSearch('BusinessPartyName', BusinessPartyName);
+                objUri.addSearch('UserDefine01', BusinessPartyName);
                 ApiService.Get(objUri, false).then(function success(result) {
                     $scope.Rcbp1s = result.data.results;
-                    if ($scope.Rcbp1s.length > 0 && $scope.Rcbp1s[0].BusinessPartyName.toUpperCase() === BusinessPartyName.toUpperCase()) {
+                    if ($scope.Rcbp1s.length > 0 && $scope.Rcbp1s[0].UserDefine01.toUpperCase() === BusinessPartyName.toUpperCase()) {
                         $scope.Rcbp1.selected = $scope.Rcbp1s[0];
                         if (BusinessPartyName.length > 1 && BusinessPartyName.length != $scope.OldBusinessPartyName.length - 1 && BusinessPartyName.length != $scope.OldBusinessPartyName.length + 1) {
                             $scope.ShowImgr1($scope.Rcbp1.selected.BusinessPartyCode);
@@ -40,26 +40,25 @@ appControllers.controller('GrListCtrl', [
         $scope.refreshGrnNos = function (Grn) {
             if (is.not.undefined(Grn) && is.not.empty(Grn)) {
                 var objUri = ApiService.Uri(true, '/api/wms/imgr1');
-                objUri.addSearch('GoodsReceiptNoteNo', Grn);
+                objUri.addSearch('InvoiceNo', Grn);
                 ApiService.Get(objUri, false).then(function success(result) {
                     $scope.GrnNos = result.data.results;
-                    if ($scope.GrnNos.length > 0 && $scope.GrnNos[0].GoodsReceiptNoteNo.toUpperCase() === Grn.toUpperCase()) {
+                    if ($scope.GrnNos.length > 0 && $scope.GrnNos[0].InvoiceNo.toUpperCase() === Grn.toUpperCase()) {
                         $scope.GrnNo.selected = $scope.GrnNos[0];
                         if (Grn.length > 1 && Grn.length != $scope.OldGoodsReceiptNoteNo.length - 1 && Grn.length != $scope.OldGoodsReceiptNoteNo.length + 1) {
                             $scope.GoToDetail($scope.GrnNo.selected);
                         }
                     }
                 });
-                 $scope.OldGoodsReceiptNoteNo=Grn;
-            }
-            else {
-              $scope.OldGoodsReceiptNoteNo='';
+                $scope.OldGoodsReceiptNoteNo = Grn;
+            } else {
+                $scope.OldGoodsReceiptNoteNo = '';
             }
         };
         $scope.ShowImgr1 = function (Customer) {
             if (is.not.undefined(Customer) && is.not.empty(Customer)) {
                 var objUri = ApiService.Uri(true, '/api/wms/imgr1');
-                objUri.addSearch('CustomerCode', Customer);
+                objUri.addSearch('UserDefine01', Customer);
                 ApiService.Get(objUri, true).then(function success(result) {
                     $scope.Imgr1s = result.data.results;
                 });
@@ -76,16 +75,15 @@ appControllers.controller('GrListCtrl', [
         $scope.GoToDetail = function (Imgr1) {
             if (Imgr1 !== null && is.not.undefined(Imgr1)) {
                 $state.go('grDetail', {
-                    'CustomerCode': Imgr1.CustomerCode,
+                    'CustomerCode': Imgr1.UserDefine01,
                     'TrxNo': Imgr1.TrxNo,
-                    'GoodsReceiptNoteNo': Imgr1.GoodsReceiptNoteNo
+                    'GoodsReceiptNoteNo': Imgr1.InvoiceNo
                 }, {
                     reload: true
                 });
             }
         };
         $scope.returnMain = function () {
-          // SqlService.Delete('Imgr2_Receipt').then(function (res) {});
             $state.go('index.main', {}, {
                 reload: true
             });
@@ -162,28 +160,23 @@ appControllers.controller('GrDetailCtrl', [
         });
 
         var setScanQty = function (barcode, imgr2) {
-            if (is.equal(imgr2.SerialNoFlag, 'Y')) {
-                $scope.Detail.Scan.Qty = imgr2.ScanQty;
-                $scope.Detail.Scan.SerialNoFlag = imgr2.SerialNoFlag;
-                $('#txt-sn').removeAttr('readonly');
-            } else {
-                imgr2.ScanQty += 1;
-                 hmImgr2.remove(barcode);
-                hmImgr2.set(barcode, imgr2);
-                   var barcode1 = barcode;
-                var objImgr2 = {
-                        ScanQty: imgr2.ScanQty
-                    },
-                    strFilter = 'TrxNo=' + imgr2.TrxNo + ' And LineItemNo=' + imgr2.LineItemNo;
-                SqlService.Update('Imgr2_Receipt', objImgr2, strFilter).then();
-                $scope.Detail.Scan = {
-                      BarCode: barcode1,
-                    SerialNo: '',
-                    SerialNoFlag: imgr2.SerialNoFlag,
-                    Qty: imgr2.ScanQty
-                };
-            }
-            // $scope.$apply();
+
+            imgr2.ScanQty += 1;
+            hmImgr2.remove(barcode);
+            hmImgr2.set(barcode, imgr2);
+            var barcode1 = barcode;
+            var objImgr2 = {
+                    ScanQty: imgr2.ScanQty
+                },
+                strFilter = 'TrxNo=' + imgr2.TrxNo + ' And LineItemNo=' + imgr2.LineItemNo;
+            SqlService.Update('Imgr2_Receipt', objImgr2, strFilter).then();
+            $scope.Detail.Scan = {
+                BarCode: barcode1,
+                SerialNo: '',
+                SerialNoFlag: imgr2.SerialNoFlag,
+                Qty: imgr2.ScanQty
+            };
+
         };
         var showImpr = function (barcode) {
             if (hmImgr2.has(barcode)) {
@@ -192,62 +185,13 @@ appControllers.controller('GrDetailCtrl', [
                     ProductCode: imgr2.ProductCode,
                     ProductDescription: imgr2.ProductDescription
                 };
-                if (is.equal(imgr2.SerialNoFlag,'Y')){
-                    $('#txt-sn').attr('readonly', false);
-                }else{
-                    $('#txt-sn').attr('readonly', true);
-                }
-                $scope.Detail.Imgr2.CustBatchNo = imgr2.UserDefine1;
+
                 setScanQty(barcode, imgr2);
             } else {
                 PopupService.Alert(popup, 'Wrong BarCode');
             }
         };
-        var setSnQty = function (barcode, imgr2) {
-            imgr2.ScanQty += 1;
-            hmImgr2.remove(barcode);
-            hmImgr2.set(barcode, imgr2);
-            var objImgr2 = {
-                    ScanQty: imgr2.ScanQty
-                },
-                strFilter = 'TrxNo=' + imgr2.TrxNo + ' And LineItemNo=' + imgr2.LineItemNo;
-            SqlService.Update('Imgr2_Receipt', objImgr2, strFilter).then();
-            $scope.Detail.Scan.Qty = imgr2.ScanQty;
-            $scope.Detail.Scan.SerialNo = '';
-            // $scope.$apply();
-        };
-        var showSn = function (sn) {
-            if (is.not.empty(sn)) {
-                var barcode = $scope.Detail.Scan.BarCode,
-                    SnArray = null,
-                    imgr2 = hmImgr2.get(barcode);
-                var imsn1 = {
-                    ReceiptNoteNo: $scope.Detail.GRN,
-                    ReceiptLineItemNo: imgr2.LineItemNo,
-                    IssueNoteNo: '',
-                    IssueLineItemNo: 0,
-                    SerialNo: sn,
-                };
-                if (hmImsn1.count() > 0 && hmImsn1.has(barcode)) {
-                    SnArray = hmImsn1.get(barcode);
-                    if (is.not.inArray(sn, SnArray)) {
-                        SnArray.push(sn);
-                        hmImsn1.remove(barcode);
-                        hmImsn1.set(barcode, SnArray);
-                    } else {
-                        $scope.Detail.Scan.SerialNo = '';
-                        // $scope.$apply();
-                        return;
-                    }
-                } else {
-                    SnArray = new Array();
-                    SnArray.push(sn);
-                    hmImsn1.set(barcode, SnArray);
-                }
-                //db_add_Imsn1_Receipt( imsn1 );
-                setSnQty(barcode, imgr2);
-            }
-        };
+
         $scope.openCam = function (type) {
             if (!ENV.fromWeb) {
                 if (is.equal(type, 'BarCode')) {
@@ -257,15 +201,6 @@ appControllers.controller('GrDetailCtrl', [
                     }, function (error) {
                         $cordovaToast.showShortBottom(error);
                     });
-                } else if (is.equal(type, 'SerialNo')) {
-                    if ($('#txt-sn').attr('readonly') != 'readonly') {
-                        $cordovaBarcodeScanner.scan().then(function (imageData) {
-                            $scope.Detail.Scan.SerialNo = imageData.text;
-                            showSn($scope.Detail.Scan.SerialNo);
-                        }, function (error) {
-                            $cordovaToast.showShortBottom(error);
-                        });
-                    }
                 }
             }
         };
@@ -313,17 +248,10 @@ appControllers.controller('GrDetailCtrl', [
                 });
             }
         };
-        $scope.ShowHideSeairlNo = function () {
-            if (is.not.undefined($scope.Detail.Scan) && is.not.empty($scope.Detail.Scan)) {
-                return ($scope.Detail.Scan.SerialNoFlag === "Y");
-            } else {
-                return false;
-            }
-        };
         $scope.clearInput = function (type) {
             if (is.equal(type, 'BarCode') && is.not.empty($scope.Detail.Scan.BarCode)) {
                 $scope.Detail.Scan = {
-                     BarCode: '',
+                    BarCode: '',
                     SerialNo: '',
                     SerialNoFlag: '',
                     Qty: 0
@@ -332,17 +260,14 @@ appControllers.controller('GrDetailCtrl', [
                     ProductCode: '',
                     ProductDescription: ''
                 };
-                $scope.Detail.Imgr2.CustBatchNo = '';
-                $('#txt-sn').attr('readonly', true);
-            } else if (is.equal(type, 'SerialNo') && is.not.empty($scope.Detail.Scan.SerialNo)) {
-                $scope.Detail.Scan.SerialNo = '';
+
             }
         };
         $scope.changeQty = function () {
             if (is.not.empty($scope.Detail.Scan.BarCode)) {
                 if (hmImgr2.count() > 0 && hmImgr2.has($scope.Detail.Scan.BarCode)) {
                     var imgr2 = hmImgr2.get($scope.Detail.Scan.BarCode);
-                    var tmpQty='';
+                    var tmpQty = '';
                     var promptPopup = $ionicPopup.show({
                         template: '<input type="number" ng-model="Detail.Scan.Qty">',
                         title: 'Enter Qty',
@@ -353,19 +278,7 @@ appControllers.controller('GrDetailCtrl', [
                         }, {
                             text: '<b>Save</b>',
                             type: 'button-positive',
-                          onTap: function (e) {
-                    // if(imgr2.SerialNoFlag!=='Y'){
-                    //    if  (imgr2.DimensionFlag==='1'){
-                    //     tmpQty=imgr2.PackingQty;
-                    //    } else if (imgr2.DimensionFlag==='2') {
-                    //      tmpQty=imgr2.WholeQty;
-                    //    }else{
-                    //      tmpQty=imgr2.LooseQty;
-                    //    }
-                    //    if ($scope.Detail.Scan.Qty>=tmpQty){
-                    //      $scope.Detail.Scan.Qty=tmpQty;
-                    //    }
-                    //    }
+                            onTap: function (e) {
                                 imgr2.ScanQty = $scope.Detail.Scan.Qty;
                                 var obj = {
                                     ScanQty: imgr2.ScanQty
@@ -434,8 +347,6 @@ appControllers.controller('GrDetailCtrl', [
                 if (is.null(popup)) {
                     if (is.equal(type, 'barcode')) {
                         showImpr($scope.Detail.Scan.BarCode);
-                    } else {
-                        showSn($scope.Detail.Scan.SerialNo);
                     }
                 } else {
                     popup.close();
@@ -453,21 +364,7 @@ appControllers.controller('GrDetailCtrl', [
                     imgr2 = value,
                     SnArray = null,
                     SerialNos = '';
-                if (is.equal(imgr2.SerialNoFlag, 'Y')) {
-                    if (hmImsn1.count() > 0 && hmImsn1.has(imgr2.BarCode)) {
-                        SnArray = hmImsn1.get(imgr2.BarCode);
-                    }
-                    for (var i in SnArray) {
-                        SerialNos = SerialNos + ',' + SnArray[i];
-                    }
-                    SerialNos = SerialNos.substr(1, SerialNos.length);
-                    var objUri = ApiService.Uri(true, '/api/wms/imsn1/create');
-                    objUri.addSearch('ReceiptNoteNo', $scope.Detail.GRN);
-                    objUri.addSearch('ReceiptLineItemNo', imgr2.LineItemNo);
-                    objUri.addSearch('SerialNos', SerialNos);
-                    objUri.addSearch('Imgr2TrxNo', imgr2.TrxNo);
-                    ApiService.Get(objUri, true).then(function success(result) {});
-                }
+
             });
             var objUri = ApiService.Uri(true, '/api/wms/imgr1/confirm');
             objUri.addSearch('TrxNo', $scope.Detail.TrxNo);
@@ -478,12 +375,11 @@ appControllers.controller('GrDetailCtrl', [
                 });
             });
         };
-        var GetImgr2ProductCode = function (GoodsReceiptNoteNo) {
+        var GetImgr2ProductCode = function (TrxNo) {
             var objUri = ApiService.Uri(true, '/api/wms/imgr2/receipt');
-            objUri.addSearch('GoodsReceiptNoteNo', GoodsReceiptNoteNo);
+            objUri.addSearch('TrxNo', TrxNo);
             ApiService.Get(objUri, true).then(function success(result) {
                 $scope.Detail.Imgr2s = result.data.results;
-                //SqlService.Delete('Imsn1_Receipt').then(function(res){
                 SqlService.Delete('Imgr2_Receipt').then(function (res) {
                     for (var i = 0; i < $scope.Detail.Imgr2s.length; i++) {
                         var objImgr2 = $scope.Detail.Imgr2s[i];
@@ -491,9 +387,8 @@ appControllers.controller('GrDetailCtrl', [
                         SqlService.Insert('Imgr2_Receipt', objImgr2).then();
                     }
                 });
-                //});
             });
         };
-        GetImgr2ProductCode($scope.Detail.GRN);
+        GetImgr2ProductCode($scope.Detail.TrxNo);
     }
 ]);

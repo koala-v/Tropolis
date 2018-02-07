@@ -6,7 +6,7 @@
     </ion-header-bar>
     <ion-pane style="margin-top:44px; height:70px; overflow:visible;">
         <div>
-            <div class="row row-center" id="div-list-rcbp">
+            <!-- <div class="row row-center" id="div-list-rcbp">
                 <div class="col col-33" style="text-align:center;">
                     <label>Customer</label>
                 </div>
@@ -18,7 +18,7 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
-            </div>
+            </div> -->
             <div class="row row-center" id="div-list-gin">
                 <div class="col col-33" style="text-align:center;">
                     <label>GIN No</label>
@@ -26,10 +26,10 @@
                 <div class="col col-67">
                     <ui-select theme="bootstrap" ng-model="GinNo.selected" reset-search-input="true" on-select="GoToDetail(GinNo.selected)">
                         <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">
-                            {{$select.selected.GoodsIssueNoteNo}}
+                            {{$select.selected.CustGINNo}}
                         </ui-select-match>
                         <ui-select-choices repeat="GinNo in GinNos track by $index" refresh="refreshGinNos($select.search)" refresh-delay="0">
-                            <div ng-bind-html="GinNo.GoodsIssueNoteNo | highlight: $select.search"></div>
+                            <div ng-bind-html="GinNo.CustGINNo | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
                 </div>

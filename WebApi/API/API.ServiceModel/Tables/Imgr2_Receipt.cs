@@ -22,5 +22,7 @@ namespace WebApi.ServiceModel.Tables
         public int WholeQty { get; set; }
         public int LooseQty { get; set; }
         public int ScanQty { get; set; }
+        public string BatchLineItemNo { get; set; }
+
     }
 }

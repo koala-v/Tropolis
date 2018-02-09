@@ -31,7 +31,7 @@ appConfig.constant('ENV', {
     updateFile:   'update.json',
     rootPath:     'Tropolis',
     configFile:   'config.txt',
-    version:      '1.0.1.0',
+    version:      '1.0.1.1',
     parameter: {
         showSerialNo : true
     },

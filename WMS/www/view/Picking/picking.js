@@ -125,7 +125,7 @@ appControllers.controller('PickingDetailCtrl', [
                 blnPass = false;
                 PopupService.Alert(popup, 'Invalid Product Picked').then();
             } else if (is.equal(type, 'Qty')) {
-                checkQty('Qty');
+                $scope.checkQty('Qty');
             }
             return blnPass;
         };
@@ -239,23 +239,23 @@ appControllers.controller('PickingDetailCtrl', [
             if ($scope.Detail.Scan.Qty < 0) {
                 $scope.Detail.Scan.Qty = 0;
             } else {
-                if ($scope.Detail.Imgi2.Qty - $scope.Detail.Scan.Qty < 0) {
+                if (parseInt($scope.Detail.Imgi2.Qty) - parseInt($scope.Detail.Scan.Qty) < 0) {
                     $scope.Detail.Scan.Qty = $scope.Detail.Imgi2.Qty;
-                    if (is.equal(Type, 'Qty')) {
-                        if (is.not.empty($scope.Detail.Imgi2.BarCode) && hmImgi2.count() > 0) {
-                            hmImgi2.remove($scope.Detail.Imgi2.BarCode);
-                            hmImgi2.set($scope.Detail.Imgi2.BarCode, $scope.Detail.Imgi2);
-                            var imgi2 = $scope.Detail.Imgi2;
-                            imgi2.ScanQty = $scope.Detail.Scan.Qty;
-                            $scope.Detail.Imgi2s[$scope.Detail.Imgi2.RowNum - 1].ScanQty = imgi2.ScanQty;
-                            $scope.Detail.Imgi2.ScanQty = imgi2.ScanQty;
-                            $scope.Detail.Imgi2.QtyBal = imgi2.Qty - imgi2.ScanQty;
-                            var obj = {
-                                ScanQty: imgi2.ScanQty
-                            };
-                            var strFilter = 'TrxNo=' + imgi2.TrxNo + ' And LineItemNo=' + imgi2.LineItemNo;
-                            SqlService.Update('Imgi2_Picking', obj, strFilter).then();
-                        }
+                }
+                if (is.equal(Type, 'Qty')) {
+                    if (is.not.empty($scope.Detail.Imgi2.BarCode) && hmImgi2.count() > 0) {
+                        hmImgi2.remove($scope.Detail.Imgi2.BarCode);
+                        hmImgi2.set($scope.Detail.Imgi2.BarCode, $scope.Detail.Imgi2);
+                        var imgi2 = $scope.Detail.Imgi2;
+                        imgi2.ScanQty = $scope.Detail.Scan.Qty;
+                        $scope.Detail.Imgi2s[$scope.Detail.Imgi2.RowNum - 1].ScanQty = imgi2.ScanQty;
+                        $scope.Detail.Imgi2.ScanQty = imgi2.ScanQty;
+                        $scope.Detail.Imgi2.QtyBal = imgi2.Qty - imgi2.ScanQty;
+                        var obj = {
+                            ScanQty: imgi2.ScanQty
+                        };
+                        var strFilter = 'TrxNo=' + imgi2.TrxNo + ' And LineItemNo=' + imgi2.LineItemNo;
+                        SqlService.Update('Imgi2_Picking', obj, strFilter).then();
                     }
                 }
             }
@@ -267,7 +267,7 @@ appControllers.controller('PickingDetailCtrl', [
                 hmImgi2.set($scope.Detail.Imgi2.BarCode, $scope.Detail.Imgi2);
                 var imgi2 = $scope.Detail.Imgi2;
                 var promptPopup = $ionicPopup.show({
-                    template: '<input type="number" ng-model="Detail.Scan.Qty" ng-change="checkQty();">',
+                    template: '<input type="number" ng-model="Detail.Scan.Qty" ng-change="checkQty()">',
                     title: 'Enter Qty',
                     subTitle: 'Are you sure to change Qty manually?',
                     scope: $scope,
@@ -308,7 +308,9 @@ appControllers.controller('PickingDetailCtrl', [
                 } else if (is.equal(type, 'Qty')) {
                     $cordovaBarcodeScanner.scan().then(function (imageData) {
                         $scope.Detail.Scan.Qty = imageData.text;
-                        if (blnVerifyInput('Qty')) {}
+                        if (blnVerifyInput('Qty')) {
+
+                        }
                     }, function (error) {
                         $cordovaToast.showShortBottom(error);
                     });

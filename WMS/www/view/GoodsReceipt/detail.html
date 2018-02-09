@@ -48,15 +48,21 @@
                     </label>
 
                     <div class="row">
-                        <div class="col col-90" style="padding:0px;">
-                            <label class="item item-input">
+                        <div class="col col-80" style="padding:0px;">
+                            <label class="item item-input" >
                                 <span class="input-label" style="padding-top:2px; padding-bottom: 2px;">Qty&nbsp;&nbsp;:</span>
                                 <span id="txt-qty" ng-bind="Detail.Scan.Qty"></span>
                             </label>
                         </div>
-                        <div class="col">
+												<div class="col col-10">
+														<button class="button button-clear button-positive button-small" ng-click="openCam('Qty')"><i class="icon ion-qr-scanner"></i></button>
+												</div>
+                        <div class="col col">
                             <button class="button button-clear button-positive button-small" ng-click="changeQty()"><i class="icon ion-android-create"></i></button>
                         </div>
+												<!-- <div class="col">
+														<button class="button button-clear button-positive button-small" ng-click="clearInput('Qty')"><i class="icon ion-android-close"></i></button>
+												</div> -->
                     </div>
                 </div>
             </div>

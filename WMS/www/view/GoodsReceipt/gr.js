@@ -201,6 +201,21 @@ appControllers.controller('GrDetailCtrl', [
                     }, function (error) {
                         $cordovaToast.showShortBottom(error);
                     });
+                } else if (is.equal(type, 'Qty')) {
+                    if (is.not.empty($scope.Detail.Scan.BarCode)) {
+                        $cordovaBarcodeScanner.scan().then(function (imageData) {
+                            $scope.Detail.Scan.Qty = imageData.text;
+                            var imgr2 = hmImgr2.get($scope.Detail.Scan.BarCode);
+                            imgr2.ScanQty = $scope.Detail.Scan.Qty;
+                            var obj = {
+                                ScanQty: imgr2.ScanQty
+                            };
+                            var strFilter = 'TrxNo=' + imgr2.TrxNo + ' And LineItemNo=' + imgr2.LineItemNo;
+                            SqlService.Update('Imgr2_Receipt', obj, strFilter).then();
+                        }, function (error) {
+                            $cordovaToast.showShortBottom(error);
+                        });
+                    }
                 }
             }
         };
@@ -261,6 +276,8 @@ appControllers.controller('GrDetailCtrl', [
                     ProductDescription: ''
                 };
 
+            }else if ( is.equal(type, 'Qty') ){
+                $scope.Detail.Scan.Qty= 0;
             }
         };
         $scope.changeQty = function () {

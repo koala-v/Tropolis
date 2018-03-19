@@ -43,7 +43,7 @@ appControllers.controller('GrListCtrl', [
                 objUri.addSearch('InvoiceNo', Grn);
                 ApiService.Get(objUri, false).then(function success(result) {
                     $scope.GrnNos = result.data.results;
-                    if ($scope.GrnNos.length > 0 && $scope.GrnNos[0].InvoiceNo.toUpperCase() === Grn.toUpperCase()) {
+                    if ($scope.GrnNos.length > 0 && $scope.GrnNos[0].CustGrnNo.toUpperCase()  === Grn.toUpperCase()) {
                         $scope.GrnNo.selected = $scope.GrnNos[0];
                         if (Grn.length > 1 && Grn.length != $scope.OldGoodsReceiptNoteNo.length - 1 && Grn.length != $scope.OldGoodsReceiptNoteNo.length + 1) {
                             $scope.GoToDetail($scope.GrnNo.selected);
@@ -77,7 +77,7 @@ appControllers.controller('GrListCtrl', [
                 $state.go('grDetail', {
                     'CustomerCode': Imgr1.UserDefine01,
                     'TrxNo': Imgr1.TrxNo,
-                    'GoodsReceiptNoteNo': Imgr1.InvoiceNo
+                    'GoodsReceiptNoteNo': Imgr1.CustGrnNo
                 }, {
                     reload: true
                 });

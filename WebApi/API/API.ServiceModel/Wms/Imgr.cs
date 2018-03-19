@@ -38,7 +38,7 @@ namespace WebApi.ServiceModel.Wms
             try
             {
                 using (var db = DbConnectionFactory.OpenDbConnection("WMS"))
-                {
+               {
                     if (!string.IsNullOrEmpty(request.UserDefine01))
                     {
                         if (string.IsNullOrEmpty(request.StatusCode))
@@ -63,7 +63,7 @@ namespace WebApi.ServiceModel.Wms
                             strImgr = "Select Top 10 Imgr1.* From Imgr1 " +
                                             "Where IsNUll(StatusCode,'')<>'DEL' And IsNUll(StatusCode,'')<>'EXE' And IsNUll(StatusCode,'')<>'CMP' " +
                                             "And (Select count(*) from Imgr2 Where Imgr2.TrxNo=Imgr1.TrxNo) > 0 " +
-                                            "And IsNUll(InvoiceNo,'') LIKE '" + request.InvoiceNo + "%'";
+                                            "And IsNUll(CustGrnNo,'') LIKE '" + request.InvoiceNo + "%'";
                                       
                             Result = db.Select<Imgr1>(
                                 strImgr

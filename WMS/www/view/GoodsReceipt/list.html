@@ -27,9 +27,9 @@
                 </div>
                 <div class="col col-67">
                     <ui-select theme="bootstrap" ng-model="GrnNo.selected" reset-search-input="true" on-select="GoToDetail(GrnNo.selected)">
-                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.InvoiceNo}}</ui-select-match>
+                        <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">{{$select.selected.CustGrnNo}}</ui-select-match>
                         <ui-select-choices repeat="GrnNo in GrnNos track by $index" refresh="refreshGrnNos($select.search)" refresh-delay="0" position="down">
-                            <div ng-bind-html="GrnNo.InvoiceNo | highlight: $select.search"></div>
+                            <div ng-bind-html="GrnNo.CustGrnNo | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
                 </div>

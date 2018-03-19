@@ -11,7 +11,7 @@ appConfig.constant('ENV', {
         port:         '8081'
     },
     ssl:          false, // 0 : false, 1 : true
-    //  port:         '52603', // http port no
+     // port:         '52603', // http port no
     port:         '8081',
     debug:        true,
     mock:         false,
@@ -31,7 +31,7 @@ appConfig.constant('ENV', {
     updateFile:   'update.json',
     rootPath:     'Tropolis',
     configFile:   'config.txt',
-    version:      '1.0.1.1',
+    version:      '1.0.1.2',
     parameter: {
         showSerialNo : true
     },

@@ -15,5 +15,6 @@ namespace WebApi.ServiceModel.Tables
         public string StatusCode { get; set; }
         public string InvoiceNo { get; set; }
         public string UserDefine01 { get; set; }
+        public string CustGrnNo { get; set; }
     }
 }

@@ -106,7 +106,8 @@ namespace WebApi.ServiceModel.Wms
                                     "(Select Top 1 " + strBarCodeFiled + " From Impr1 Where TrxNo=Imgr2.ProductTrxNo) AS BarCode,Imgr1.CustomerCode," +
                                     //"(Select Top 1 SerialNoFlag From Impr1 Where TrxNo=Imgr2.ProductTrxNo) AS SerialNoFlag," +
                                    " '' AS SerialNoFlag," +  // Tropolis
-                                    "0 AS ScanQty " +
+                                    "0 AS ScanQty , " +
+                                     " '' AS ScanedBarCodeFlag " +
                                     "From Imgr2 " +
                                     "Left Join Imgr1 On Imgr2.TrxNo = Imgr1.TrxNo " +
                                     "Where Imgr1.TrxNo='" + request.TrxNo + "'";

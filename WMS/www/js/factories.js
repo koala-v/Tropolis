@@ -18,7 +18,10 @@ appFactory.factory( 'TABLE_DB', function () {
             PackingQty: 'INT',
             WholeQty: 'INT',
             LooseQty: 'INT',
-            ScanQty: 'INT'
+            ScanQty: 'INT',
+            ScanedBarCodeFlag:'TEXT'
+
+
         },
         Imsn1_Receipt: {
             ReceiptNoteNo: 'TEXT',

@@ -20,5 +20,8 @@ namespace WebApi.ServiceModel.Tables
 								public int Qty { get; set; }
 								public int QtyBal { get; set; }
 								public int ScanQty { get; set; }
+                                public int SumScanQty { get; set; }
+                                public int SumAcutalQty { get; set; }
+
     }
 }

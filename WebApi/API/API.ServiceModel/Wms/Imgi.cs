@@ -91,7 +91,9 @@ namespace WebApi.ServiceModel.Wms
                                     //"(Select Top 1 SerialNoFlag From Impr1 Where TrxNo=Imgi2.ProductTrxNo) AS SerialNoFlag," +
                                      " '' AS SerialNoFlag," + // Tropolis
                                     "(CASE Imgi2.DimensionFlag When '1' THEN Imgi2.PackingQty When '2' THEN Imgi2.WholeQty ELSE Imgi2.LooseQty END) AS Qty, " +
-                                    "0 AS QtyBal, 0 AS ScanQty " +
+                                    "0 AS QtyBal, 0 AS ScanQty  , " +
+                                    "0 AS SumScanQty, 0 AS SumAcutalQty   " +
+                                
                                     "From Imgi2 " +
                                     "Left Join Imgi1 On Imgi2.TrxNo=Imgi1.TrxNo " +
                                     "Where IsNull(Imgi1.StatusCode,'')='USE' And Imgi1.GoodsIssueNoteNo='" + request.GoodsIssueNoteNo + "'";

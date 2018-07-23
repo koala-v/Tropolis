@@ -19,8 +19,9 @@ appFactory.factory( 'TABLE_DB', function () {
             WholeQty: 'INT',
             LooseQty: 'INT',
             ScanQty: 'INT',
-            ScanedBarCodeFlag:'TEXT'
-
+            ScanedBarCodeFlag:'TEXT',
+SumScanQty: 'INT',
+SumAcutalQty: 'INT',
 
         },
         Imsn1_Receipt: {
@@ -87,7 +88,9 @@ appFactory.factory( 'TABLE_DB', function () {
             BarCode:'TEXT',
             Qty:'INT',
             ScanQty:'INT',
-            QtyBal:'INT'
+            QtyBal:'INT',
+            SumScanQty: 'INT',
+            SumAcutalQty: 'INT',
         },
         Imsn1_Picking:{
             ReceiptNoteNo:'TEXT',

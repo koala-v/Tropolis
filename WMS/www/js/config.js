@@ -4,7 +4,7 @@ appConfig.constant('ENV', {
     website:      'www.sysfreight.net/app/wms/Tropolis',
       api:        'www.sysfreight.net/apis/wms/Tropolis',
     // api:          'localhost',
-    // api: 'localhost:26721',
+   // api: 'localhost:26721',
     reset:  {
         website:      'www.sysfreight.net/app/wms/Tropolis',
         api:          'www.sysfreight.net/apis/wms/Tropolis',
@@ -31,7 +31,7 @@ appConfig.constant('ENV', {
     updateFile:   'update.json',
     rootPath:     'Tropolis',
     configFile:   'config.txt',
-    version:      '1.0.1.3',
+    version:      '1.0.1.6',
     parameter: {
         showSerialNo : true
     },

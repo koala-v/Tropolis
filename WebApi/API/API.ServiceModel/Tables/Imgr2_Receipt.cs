@@ -24,6 +24,12 @@ namespace WebApi.ServiceModel.Tables
         public int ScanQty { get; set; }
         public string BatchLineItemNo { get; set; }
         public string ScanedBarCodeFlag { get; set; }
+        public int SumScanQty { get; set; }
+        public int SumAcutalQty { get; set; }  
+        
+
+
+
 
     }
 }

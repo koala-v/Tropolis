@@ -320,8 +320,9 @@ appControllers.controller('GrDetailCtrl', [
                         ProductCode: results.rows.item(i).ProductCode,
                         BarCode: results.rows.item(i).BarCode,
                         // ScanQty: results.rows.item(i).ScanQty > 0 ? results.rows.item(i).ScanQty : 0,
-                        SumScanQty: results.rows.item(i).SumScanQty,
-                        SumAcutalQty: results.rows.item(i).SumAcutalQty,
+                        SumScanQty: parseInt(results.rows.item(i).SumScanQty),
+                        SumAcutalQty: parseInt(results.rows.item(i).SumAcutalQty),
+                        ScanQty: parseInt(results.rows.item(i).ScanQty),
                         ActualQty: 0
                     };
                     switch (results.rows.item(i).DimensionFlag) {
@@ -334,6 +335,10 @@ appControllers.controller('GrDetailCtrl', [
                     default:
                         imgr2.ActualQty = results.rows.item(i).LooseQty;
                     }
+
+
+
+
                     $scope.Detail.Imgr2sDb.push(imgr2);
                 }
                 $ionicLoading.hide();
@@ -436,7 +441,7 @@ appControllers.controller('GrDetailCtrl', [
                     if (blnDiscrepancies) {
                         $ionicLoading.hide();
                         PopupService.Alert(popup, 'Discrepancies on Qty').then(function (res) {
-                            // $scope.openModal();
+                             $scope.openModal();
                         });
                     } else {
                         sendConfirm();

@@ -130,6 +130,7 @@ appControllers.controller('GrDetailCtrl', [
         var Imgr2Temp = null;
         var hmImgr2 = new HashMap();
         var hmImsn1 = new HashMap();
+
         $scope.Detail = {
             Customer: $stateParams.CustomerCode,
             GRN: $stateParams.GoodsReceiptNoteNo,
@@ -309,6 +310,7 @@ appControllers.controller('GrDetailCtrl', [
             }
         };
         $scope.openModal = function () {
+            var hmBarCode = new HashMap();
             $scope.modal.show();
             $ionicLoading.show();
             SqlService.Select('Imgr2_Receipt', '*').then(function (results) {
@@ -336,10 +338,42 @@ appControllers.controller('GrDetailCtrl', [
                         imgr2.ActualQty = results.rows.item(i).LooseQty;
                     }
 
+                    if (hmBarCode.has(imgr2.BarCode)) {
+                    } else {
 
+                          // var strFilter = "BarCode='" + imgr2.BarCode + "'";
+                          // var SumAcutalQty = 0;
+                          // SqlService.Select('Imgr2_Receipt', '*', strFilter).then(function (results) {
+                          //     var len = results.rows.length;
+                          //     if (len > 0) {
+                          //         for (var i = 0; i < len; i++) {
+                          //             switch (results.rows.item(i).DimensionFlag) {
+                          //             case '1':
+                          //                 imgr2.ActualQty = results.rows.item(i).PackingQty;
+                          //                 break;
+                          //             case '2':
+                          //                 imgr2.ActualQty = results.rows.item(i).WholeQty;
+                          //                 break;
+                          //             default:
+                          //                 imgr2.ActualQty = results.rows.item(i).LooseQty;
+                          //             }
+                          //             SumAcutalQty = parseInt(SumAcutalQty) + parseInt(imgr2.ActualQty);
+                          //         }
+                          //         imgr2.SumAcutalQty = SumAcutalQty;
+                          //
+                          //     } else {
+                          //         PopupService.Alert(popup, 'not Record');
+                          //     }
+                          //     $ionicLoading.hide();
+                          // }, function (error) {
+                          //     $ionicLoading.hide();
+                          // });
 
+                          $scope.Detail.Imgr2sDb.push(imgr2);
+                          hmBarCode.set(imgr2.BarCode, imgr2.BarCode);
 
-                    $scope.Detail.Imgr2sDb.push(imgr2);
+                    }
+
                 }
                 $ionicLoading.hide();
             }, function (error) {
